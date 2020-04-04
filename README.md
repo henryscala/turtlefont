@@ -4,9 +4,8 @@ turtlefont
 (point x y)
 (polyline point point ... )
 (list polyline polyline ...) (list anything anyting...)
-(variable name definition)
-(scale variable-name factor) (scale definition factor)
-(position vaiable-name factor) (position definition factor)
+(var name definition)
+(position vaiable-name x y width height)
 
 
 
@@ -28,6 +27,11 @@ for (int offset = 0; offset < length; ) {
    // do something with the codepoint
 
    offset += Character.charCount(codepoint);
+   
 }
+
+SwingUtilities.invokeLater 
+
+Swing timer 
 ```
 

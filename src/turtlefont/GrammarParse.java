@@ -5,8 +5,10 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 
+
 abstract class GrammarElement {
 	abstract String toStringHelper(int level);
+	abstract double len(); 
 	@Override
 	public String toString() {
 		return toStringHelper(0);
@@ -34,13 +36,22 @@ class GrammarElementList extends GrammarElement {
 		sb.append(String.format("%s%s",strLevel, "}\n"));
 		return sb.toString();
 	}
+
+	@Override
+	double len() {
+		return elementList.stream().mapToDouble(e->e.len()).sum();
+	}
 }
 
 class Point extends GrammarElement{
 	static final String tag = "point";
 	double x; 
 	double y; 
-	
+	public double distance(Point p) {
+		double dx = x-p.x;
+		double dy = y-p.y;
+		return Math.sqrt(dx*dx+dy*dy);
+	}
 	@Override
 	public String toStringHelper(int level) {
 		StringBuilder sbLevel = new StringBuilder(); 
@@ -51,6 +62,12 @@ class Point extends GrammarElement{
 		StringBuilder sb = new StringBuilder(); 
 		sb.append(String.format("%s %f %f\n", strLevel,x,y));
 		return sb.toString();
+	}
+
+	@Override
+	double len() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }
@@ -69,6 +86,11 @@ class Variable extends GrammarElement {
 		StringBuilder sb = new StringBuilder(); 
 		sb.append(String.format("%s %s = %s\n", strLevel,name, toStringHelper(level+1)));
 		return sb.toString();
+	}
+	@Override
+	double len() {
+		// TODO Auto-generated method stub
+		return grammarElement.len();
 	}
 }
 
@@ -91,6 +113,17 @@ class PolyLine extends GrammarElement {
 		
 		sb.append(String.format("%s%s",strLevel, "}\n"));
 		return sb.toString();
+	}
+	@Override
+	double len() {
+		Point point = pointList.get(0);
+		double d=0;
+		for(int i=1;i<pointList.size();i++) {
+			Point pointNext = pointList.get(i);
+			d+=point.distance(pointNext);
+			point = pointNext; 
+		}
+		return d;
 	}
 }
 
@@ -156,7 +189,7 @@ public class GrammarParse {
 		} 
 		return (GrammarElementList)parseGrammarElement(sexpr);
 	}
-	public GrammarElementList parse(ArrayList<SExpr> sexprList) throws Exception {
+	public HashMap<String, GrammarElement> parse(ArrayList<SExpr> sexprList) throws Exception {
 		variableMap.clear();
 		for (int i=0;i<sexprList.size();i++) {
 			SExpr sexpr = sexprList.get(i); 
@@ -169,9 +202,7 @@ public class GrammarParse {
 				
 			}
 		}
-		SExpr sexpr = sexprList.get(sexprList.size()-1);
-		
-		return parseList(sexpr);
+		return variableMap; 
 	}
 
 }

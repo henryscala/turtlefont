@@ -1,0 +1,6 @@
+(var line1 (polyline (point 0 0) (point 0 1) ))
+(var line2 (polyline (point 0 0) (point 1 0) (point 1 1)))
+(var line3 (polyline (point 0 0.5) (point 1 0.5) ))
+(var line4 (polyline (point 0.5 0) (point 0.5 1) ))
+(var line5 (polyline (point 0 1) (point 1 1) ))
+(var 田 (list line1 line2 line3 line4 line5))
