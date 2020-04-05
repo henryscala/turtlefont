@@ -1,4 +1,4 @@
-package turtlefont;
+package turtlefont.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -20,14 +20,14 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import turtlefont.Utils;
 import turtlefont.grammar.GrammarElement;
 import turtlefont.grammar.GrammarParse;
 import turtlefont.grammar.SExpr;
-import turtlefont.grammar.Utils;
 
 
 
-public class Main extends JFrame {
+public class MainFrame extends JFrame {
 	/**
 	 * 
 	 */
@@ -35,7 +35,7 @@ public class Main extends JFrame {
 	final JFileChooser fileChooser = new JFileChooser();
 	PaintPanel paintPanel = new PaintPanel();
 	
-	public Main() throws Exception{
+	public MainFrame() throws Exception{
 		
 		JMenuBar menuBar = new JMenuBar();
 		this.setJMenuBar(menuBar);
@@ -78,7 +78,7 @@ public class Main extends JFrame {
 		
 		
 		
-		 new Main(); 
+		 new MainFrame(); 
 		
 		
 	}

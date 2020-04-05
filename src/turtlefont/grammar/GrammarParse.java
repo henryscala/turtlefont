@@ -62,12 +62,7 @@ public class GrammarParse {
 		}
 		throw new Exception("unknown tag "+firstChild.atom); 
 	}
-	private GrammarElementList parseList(SExpr sexpr) throws Exception {
-		if (!sexpr.items.get(0).atom.equals(GrammarElementList.tag)) {
-			throw new Exception("the element should be a list");
-		} 
-		return (GrammarElementList)parseGrammarElement(sexpr);
-	}
+
 	public HashMap<String, GrammarElement> parse(ArrayList<SExpr> sexprList) throws Exception {
 		variableMap.clear();
 		for (int i=0;i<sexprList.size();i++) {

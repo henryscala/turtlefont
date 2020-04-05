@@ -1,4 +1,4 @@
-package turtlefont.grammar;
+package turtlefont;
 
 import java.io.File;
 import java.io.FileInputStream;
