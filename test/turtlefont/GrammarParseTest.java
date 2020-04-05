@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.junit.Test;
+
+import turtlefont.grammar.GrammarElement;
+import turtlefont.grammar.GrammarParse;
+import turtlefont.grammar.SExpr;
 public class GrammarParseTest {
 	@Test
 	public void testSExprParse() throws Exception{

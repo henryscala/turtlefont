@@ -1,4 +1,4 @@
-package turtlefont;
+package turtlefont.grammar;
 
 import java.util.ArrayList;
 import java.util.Arrays;
