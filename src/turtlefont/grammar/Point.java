@@ -4,6 +4,14 @@ public class Point extends GrammarElement{
 	static final String tag = "point";
 	public double x; 
 	public double y; 
+	
+	public Point(double x, double y) {
+		this.x = x;
+		this.y = y; 
+	}
+	public Point() {
+		this(0,0);
+	}
 	public double distance(Point p) {
 		double dx = x-p.x;
 		double dy = y-p.y;

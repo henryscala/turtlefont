@@ -28,6 +28,8 @@ import javax.swing.Timer;
 import turtlefont.Utils;
 import turtlefont.grammar.GrammarElement;
 import turtlefont.grammar.GrammarParse;
+import turtlefont.grammar.Point;
+import turtlefont.grammar.PolyLine;
 import turtlefont.grammar.SExpr;
 
 
@@ -41,6 +43,51 @@ public class MainFrame extends JFrame {
 	PaintPanel paintPanel = new PaintPanel();
 	EditPanel editPanel = new EditPanel();
 	JTabbedPane tabbedPane = new JTabbedPane();
+	
+	ActionListener drawPointListener = (s) -> {
+		String line = JOptionPane.showInputDialog("input point specified by x,y. E.g. 100,100 ");
+		if (line == null || line.equals("")) {
+			JOptionPane.showMessageDialog(this, "you haven't specify a point");
+			return;
+		}
+		String[] words = line.split(",",2);
+		if (words == null || words.length != 2) {
+			JOptionPane.showMessageDialog(this, "you haven't specify a correct point");
+			return;
+		}
+		double x = Double.valueOf(words[0].trim());
+		double y = Double.valueOf(words[1].trim());
+		Point p = new Point(x,y);
+		paintPanel.addGrammarElement(p);
+	};
+	
+	ActionListener drawLineListener = (s) -> {
+		String line = JOptionPane.showInputDialog("input line specified by x1,y1,x2,y2. E.g. 100,100,200,200 ");
+		if (line == null || line.equals("")) {
+			JOptionPane.showMessageDialog(this, "you haven't specify 2 points");
+			return;
+		}
+		String[] words = line.split(",",4);
+		if (words == null || words.length != 4) {
+			JOptionPane.showMessageDialog(this, "you haven't specify correct 2 points");
+			return;
+		}
+		double x1 = Double.valueOf(words[0].trim());
+		double y1 = Double.valueOf(words[1].trim());
+		double x2 = Double.valueOf(words[2].trim());
+		double y2 = Double.valueOf(words[3].trim());
+		Point p1 = new Point(x1,y1);
+		Point p2 = new Point(x2,y2);
+		PolyLine pl = new PolyLine();
+		pl.pointList.add(p1);
+		pl.pointList.add(p2);
+		paintPanel.addGrammarElement(pl);;
+		
+	};
+	
+	ActionListener clearCanvasListener = (s)->{
+		paintPanel.grammarElementList.elementList.clear();
+	};
 	
 	ActionListener playFileListener = (s)->{
 		
@@ -71,7 +118,7 @@ public class MainFrame extends JFrame {
 			return; 
 		}
 		tabbedPane.setSelectedComponent(paintPanel);
-		paintPanel.setGrammarElement(element);
+		paintPanel.addGrammarElement(element);
 	};
 	ActionListener fileSaveListener = (s)->{
 		//In response to a button click:
@@ -110,21 +157,37 @@ public class MainFrame extends JFrame {
 		JMenu fileMenu = new JMenu("File");
 		JMenuItem openFontFile = new JMenuItem("Open"); 
 		JMenuItem saveFontFile = new JMenuItem("Save"); 
-		JMenuItem playFontFile = new JMenuItem("Play"); 
 		fileMenu.add(openFontFile); 
 		fileMenu.add(saveFontFile); 
-		fileMenu.add(playFontFile);
+		
+		JMenu drawMenu = new JMenu("Draw");
+		JMenuItem playFontFile = new JMenuItem("Play"); 
+		JMenuItem clearCanvas = new JMenuItem("ClearCanvas"); 
+		JMenuItem drawPoint = new JMenuItem("DrawPoint");
+		JMenuItem drawLine = new JMenuItem("DrawLine");
+		
+		drawMenu.add(playFontFile);
+		drawMenu.add(clearCanvas);
+		drawMenu.add(drawPoint);
+		drawMenu.add(drawLine);
+		
 		menuBar.add(fileMenu); 
+		menuBar.add(drawMenu);
+		
 		openFontFile.addActionListener(fileOpenListener);
 		saveFontFile.addActionListener(fileSaveListener);
 		playFontFile.addActionListener(playFileListener);
+		clearCanvas.addActionListener(clearCanvasListener);
+		drawPoint.addActionListener(drawPointListener);
+		drawLine.addActionListener(drawLineListener);
+		
 		
 		tabbedPane.addTab("show", paintPanel);
 		tabbedPane.addTab("edit", editPanel);
 		
 		this.getContentPane().add(tabbedPane, BorderLayout.CENTER);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
-		this.setSize(800, 600);
+		this.setSize(800, 800);
 		this.setVisible(true);
 	}
 	public static void main(String[] args) throws Exception {

@@ -1,5 +1,6 @@
 package turtlefont.ui;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -22,21 +23,31 @@ public class PaintPanel extends JPanel implements ActionListener{
 	private static final long serialVersionUID = 1L;
 	static final double STEP_LEN = 0.06;
 	static final int TIMER_PERIOD = 50;//milli seconds
-	GrammarElement element;
+	static final int WIDTH = 600; 
+	static final int HEIGHT = 600; 
+	static final int LINE_WIDTH = 3; 
+	static final int LEFT_MARGIN = 40;
+	static final int TOP_MARGIN = 40; 
+	
+	public GrammarElementList grammarElementList = new GrammarElementList();
 	Timer timer = new Timer(TIMER_PERIOD,this);//100 milli seconds 
 	double totalDistance; 
 	double currDistance;
 	public PaintPanel() throws Exception{
 		timer.start();
-		this.setPreferredSize(new Dimension(800,600));
+		this.setPreferredSize(new Dimension(WIDTH,HEIGHT));
+		this.setSize(new Dimension(WIDTH,HEIGHT));
 		this.setBackground(Color.white);
-		
-
 	}
-	public void setGrammarElement(GrammarElement element) {
-		this.element = element; 
-		totalDistance = element.len(); 
+	
+	public void resetDistance() {
+		totalDistance = grammarElementList.len(); 
 		currDistance = 0; 
+	}
+	public void addGrammarElement(GrammarElement element) {
+		grammarElementList.elementList.add(element);
+		resetDistance();
+		System.out.println(grammarElementList);
 	}
 	
 	//timer fires
@@ -50,12 +61,35 @@ public class PaintPanel extends JPanel implements ActionListener{
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D)g;
-		if(element != null) {
-			drawGrammarElement(g2,element,100,100,300,300,currDistance);
+		g2.setStroke(new BasicStroke(LINE_WIDTH));
+		drawCoordinate(g2); 
+		if(grammarElementList.elementList.size() > 0) {
+			drawGrammarElement(g2,grammarElementList,LEFT_MARGIN,TOP_MARGIN,WIDTH-2*LEFT_MARGIN,HEIGHT-2*TOP_MARGIN,currDistance);
+		}
+	}
+	private void drawCoordinate(Graphics2D g) {
+		final int COORDINATE_INTERVAL = 50;
+		g.drawLine(0, 0, WIDTH, 0);
+		for (int i=0;i<WIDTH;i+=COORDINATE_INTERVAL) {
+			g.drawLine(i, 0, i, 5*LINE_WIDTH);
+			g.drawString(String.valueOf(i), i, 6*LINE_WIDTH);
+		}
+		g.drawLine(0, 0, 0, HEIGHT);
+		for (int i=0;i<HEIGHT;i+=COORDINATE_INTERVAL) {
+			if (i == 0) {
+				continue;
+			}
+			g.drawLine(0, i, 5*LINE_WIDTH, i);
+			g.drawString(String.valueOf(i), LINE_WIDTH, i);
 		}
 	}
 	private void drawGrammarElement(Graphics2D g,GrammarElement element, int x, int y, int width, int height, double distance) {
 		double currDistance = 0; 
+		if (element instanceof Point) {
+			Point p = (Point)element;
+			g.drawArc((int)(p.x*width)+x, (int)(p.y*height)+y, LINE_WIDTH*2, LINE_WIDTH*2, 0, 360);
+			return; 
+		}
 		if (element instanceof GrammarElementList) {
 			GrammarElementList list = (GrammarElementList)element;
 			for(int i=0;i<list.elementList.size();i++) {
