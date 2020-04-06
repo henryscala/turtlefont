@@ -35,3 +35,8 @@ SwingUtilities.invokeLater
 Swing timer 
 ```
 
+# TODO
+support position while designing font/chart 
+
+(done) before play the font/chart, don't need to input an argument 
+

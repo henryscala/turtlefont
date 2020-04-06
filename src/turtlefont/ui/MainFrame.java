@@ -28,6 +28,9 @@ import javax.swing.JTabbedPane;
 import javax.swing.Timer;
 
 import turtlefont.Utils;
+import turtlefont.geometry.LineCrossPointSolver;
+import turtlefont.geometry.LineParametricEquation;
+import turtlefont.geometry.Vector2;
 import turtlefont.grammar.GrammarElement;
 import turtlefont.grammar.GrammarParse;
 import turtlefont.grammar.Point;
@@ -95,6 +98,52 @@ public class MainFrame extends JFrame {
 		
 	};
 	
+	private PolyLine inputLine() {
+		String line = JOptionPane.showInputDialog("input line specified by x1,y1,x2,y2. E.g. 100,100,200,200 ");
+		if (line == null || line.equals("")) {
+			JOptionPane.showMessageDialog(this, "you haven't specify 2 points");
+			return null;
+		}
+		String[] words = line.split(",",4);
+		if (words == null || words.length != 4) {
+			JOptionPane.showMessageDialog(this, "you haven't specify correct 2 points");
+			return null;
+		}
+		double x1 = Double.valueOf(words[0].trim());
+		double y1 = Double.valueOf(words[1].trim());
+		double x2 = Double.valueOf(words[2].trim());
+		double y2 = Double.valueOf(words[3].trim());
+		Point p1 = new Point(x1,y1);
+		Point p2 = new Point(x2,y2);
+		PolyLine pl = new PolyLine();
+		pl.pointList.add(p1);
+		pl.pointList.add(p2);
+		paintPanel.addGrammarElement(pl);
+		return pl; 
+	}
+	
+	ActionListener drawCrossPointOfTwoLinesListener  = (s) -> {
+		PolyLine pl1 = inputLine(); 
+		PolyLine pl2 = inputLine();
+		Vector2 p1 = new Vector2(pl1.pointList.get(0).x,pl1.pointList.get(0).y);
+		Vector2 p2 = new Vector2(pl1.pointList.get(1).x,pl1.pointList.get(1).y);
+		LineParametricEquation line1 = new LineParametricEquation(p1,p2);
+		Vector2 p3 = new Vector2(pl2.pointList.get(0).x,pl2.pointList.get(0).y);
+		Vector2 p4 = new Vector2(pl2.pointList.get(1).x,pl2.pointList.get(1).y);
+		LineParametricEquation line2 = new LineParametricEquation(p3,p4);
+		LineCrossPointSolver solver = new LineCrossPointSolver();
+		solver.line1 = line1; 
+		solver.line2 = line2;
+//		System.out.println("line1\n " + pl1);
+//		System.out.println("line2\n " + pl2);
+		Vector2 crossPoint = solver.calculateCrossPoint();
+		
+		Point point = new Point(crossPoint.getX(),crossPoint.getY());
+//		System.out.println("cross\n " + point);
+		paintPanel.addGrammarElement(point);
+		JOptionPane.showMessageDialog(this, "cross point is " + crossPoint);
+	};
+	
 	ActionListener clearCanvasListener = (s)->{
 		paintPanel.grammarElementList.elementList.clear();
 	};
@@ -110,25 +159,34 @@ public class MainFrame extends JFrame {
 		}
 		GrammarParse parse = new GrammarParse();
 		HashMap<String, GrammarElement> grammarElementMap;
+		
 		try {
 			grammarElementMap = parse.parse(sexprList);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return; 
 		}
-		String charToPlay = JOptionPane.showInputDialog("input the char to play");
-		if (charToPlay == null || charToPlay.equals("")) {
-			JOptionPane.showMessageDialog(this, "you haven't specify a char to play");
-			return;
+		GrammarElement maxLenElement = null; 
+		double maxLen = 0; 
+		for(GrammarElement element:grammarElementMap.values()) {
+			if(element.len()>maxLen) {
+				maxLen = element.len();
+				maxLenElement = element; 
+			}
 		}
-		
-		GrammarElement element = grammarElementMap.get( charToPlay );
-		if(element == null) {
-			JOptionPane.showMessageDialog(this, "the char "+charToPlay+" does not exist in the grammar");
+//		String charToPlay = JOptionPane.showInputDialog("input the char to play");
+//		if (charToPlay == null || charToPlay.equals("")) {
+//			JOptionPane.showMessageDialog(this, "you haven't specify a char to play");
+//			return;
+//		}
+//		
+//		GrammarElement element = grammarElementMap.get( charToPlay );
+		if(maxLenElement == null) {
+			JOptionPane.showMessageDialog(this, "does not find a char to play?");
 			return; 
 		}
 		tabbedPane.setSelectedComponent(paintPanel);
-		paintPanel.addGrammarElement(element);
+		paintPanel.addGrammarElement(maxLenElement);
 	};
 	ActionListener fileSaveListener = (s)->{
 		//In response to a button click:
@@ -176,12 +234,14 @@ public class MainFrame extends JFrame {
 		
 		JMenuItem drawPoint = new JMenuItem("DrawPoint");
 		JMenuItem drawLine = new JMenuItem("DrawLine");
+		JMenuItem drawCrossPointOfTwoLines = new JMenuItem("DrawCrossPointOfTwoLines");
 		JCheckBoxMenuItem zoomMode = new JCheckBoxMenuItem("zoomMode",true);
 		drawMenu.add(playFontFile);
 		drawMenu.add(clearCanvas);
 		drawMenu.add(zoomMode);
 		drawMenu.add(drawPoint);
 		drawMenu.add(drawLine);
+		drawMenu.add(drawCrossPointOfTwoLines);
 		
 		menuBar.add(fileMenu); 
 		menuBar.add(drawMenu);
@@ -193,6 +253,7 @@ public class MainFrame extends JFrame {
 		drawPoint.addActionListener(drawPointListener);
 		drawLine.addActionListener(drawLineListener);
 		zoomMode.addActionListener(zoomModeListener);
+		drawCrossPointOfTwoLines.addActionListener(drawCrossPointOfTwoLinesListener);
 		
 		
 		tabbedPane.addTab("show", paintPanel);

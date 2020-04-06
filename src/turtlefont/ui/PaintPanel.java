@@ -50,7 +50,6 @@ public class PaintPanel extends JPanel implements ActionListener{
 	public void addGrammarElement(GrammarElement element) {
 		grammarElementList.elementList.add(element);
 		resetDistance();
-		System.out.println(grammarElementList);
 	}
 	
 	//timer fires

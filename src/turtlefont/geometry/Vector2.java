@@ -15,6 +15,10 @@ public class Vector2 {
 	public Vector2() {
 		this(0,0);
 	}
+	@Override
+	public String toString() {
+		return String.format("Vector2(%f,%f)", elem[X],elem[Y]); 
+	}
 	public double getX() {
 		return elem[X];
 	}
@@ -43,5 +47,10 @@ public class Vector2 {
 	}
 	public Vector2 subtract(Vector2 other) {
 		return new Vector2(-other.getX()+getX(),-other.getY()+getY());
+	}
+	//calculate the area of the parallelogram formed by the two vectors
+	//it is also the determinant
+	public double determinant(Vector2 other) {
+		return this.getX()*other.getY() - this.getY()*other.getX();
 	}
 }
