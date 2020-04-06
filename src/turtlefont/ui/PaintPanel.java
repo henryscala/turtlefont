@@ -21,13 +21,16 @@ public class PaintPanel extends JPanel implements ActionListener{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	static final double STEP_LEN = 0.06;
+	static final double ZOOM_MODE_STEP_LEN = 0.06;
+	static final double NORMAL_MODE_STEP_LEN = 3;
 	static final int TIMER_PERIOD = 50;//milli seconds
 	static final int WIDTH = 600; 
 	static final int HEIGHT = 600; 
 	static final int LINE_WIDTH = 3; 
 	static final int LEFT_MARGIN = 40;
 	static final int TOP_MARGIN = 40; 
+	
+	boolean zoomMode = true; 
 	
 	public GrammarElementList grammarElementList = new GrammarElementList();
 	Timer timer = new Timer(TIMER_PERIOD,this);//100 milli seconds 
@@ -53,7 +56,11 @@ public class PaintPanel extends JPanel implements ActionListener{
 	//timer fires
 	@Override
 	public void actionPerformed(ActionEvent e){
-		currDistance += STEP_LEN; 
+		if (zoomMode) {
+			currDistance += ZOOM_MODE_STEP_LEN; 
+		} else {
+			currDistance += NORMAL_MODE_STEP_LEN;
+		}
 		validate();
 		repaint();
 	}
@@ -64,7 +71,12 @@ public class PaintPanel extends JPanel implements ActionListener{
 		g2.setStroke(new BasicStroke(LINE_WIDTH));
 		drawCoordinate(g2); 
 		if(grammarElementList.elementList.size() > 0) {
-			drawGrammarElement(g2,grammarElementList,LEFT_MARGIN,TOP_MARGIN,WIDTH-2*LEFT_MARGIN,HEIGHT-2*TOP_MARGIN,currDistance);
+			if (zoomMode) {
+				drawGrammarElement(g2,grammarElementList,LEFT_MARGIN,TOP_MARGIN,WIDTH-2*LEFT_MARGIN,HEIGHT-2*TOP_MARGIN,currDistance);
+		
+			} else {
+				drawGrammarElement(g2,grammarElementList,0,0,1,1,currDistance);
+			}
 		}
 	}
 	private void drawCoordinate(Graphics2D g) {

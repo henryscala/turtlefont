@@ -15,6 +15,8 @@ import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.swing.AbstractButton;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -44,6 +46,14 @@ public class MainFrame extends JFrame {
 	EditPanel editPanel = new EditPanel();
 	JTabbedPane tabbedPane = new JTabbedPane();
 	
+	ActionListener zoomModeListener = new ActionListener() {  
+        public void actionPerformed(ActionEvent event) {  
+            AbstractButton aButton = (AbstractButton) event.getSource();  
+            boolean selected = aButton.getModel().isSelected();  
+            paintPanel.zoomMode = selected; 
+        }  
+    };  
+    
 	ActionListener drawPointListener = (s) -> {
 		String line = JOptionPane.showInputDialog("input point specified by x,y. E.g. 100,100 ");
 		if (line == null || line.equals("")) {
@@ -163,11 +173,13 @@ public class MainFrame extends JFrame {
 		JMenu drawMenu = new JMenu("Draw");
 		JMenuItem playFontFile = new JMenuItem("Play"); 
 		JMenuItem clearCanvas = new JMenuItem("ClearCanvas"); 
+		
 		JMenuItem drawPoint = new JMenuItem("DrawPoint");
 		JMenuItem drawLine = new JMenuItem("DrawLine");
-		
+		JCheckBoxMenuItem zoomMode = new JCheckBoxMenuItem("zoomMode",true);
 		drawMenu.add(playFontFile);
 		drawMenu.add(clearCanvas);
+		drawMenu.add(zoomMode);
 		drawMenu.add(drawPoint);
 		drawMenu.add(drawLine);
 		
@@ -180,6 +192,7 @@ public class MainFrame extends JFrame {
 		clearCanvas.addActionListener(clearCanvasListener);
 		drawPoint.addActionListener(drawPointListener);
 		drawLine.addActionListener(drawLineListener);
+		zoomMode.addActionListener(zoomModeListener);
 		
 		
 		tabbedPane.addTab("show", paintPanel);
