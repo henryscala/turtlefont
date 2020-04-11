@@ -36,7 +36,8 @@ public class GrammarParseTest {
 	}
 	@Test
 	public void testLispy() throws Exception{
-		String program = "(if false (- 2 1) (- 1 2))"; 
+		String program = "(or true false false ) "; 
+		//String program = "(begin (define l 1) (set! l (+ 2 3) )) ";
 		Object ast = Lispy.parse(program);
 		Object result = Lispy.eval( ast, Env.standardEnv() );
 		System.out.println( Lispy.lispStr( result ));

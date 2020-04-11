@@ -30,7 +30,7 @@ public class Lispy {
 		ArrayList<Object> list = (ArrayList<Object>)x;
 		String firstKeyword = (String)list.get(0);
 		if (firstKeyword.equals("quote")) {
-			return rest(list);
+			return first(rest(list));
 		}
 		
 		if (firstKeyword.equals("if")) {
@@ -46,14 +46,14 @@ public class Lispy {
 		}
 		if (firstKeyword.equals("define")) {
 			Object var = first(rest(list));
-			Object expr = rest(rest(list)); 
+			Object expr = first(rest(rest(list))); 
 			Object val = eval(expr,env);
 			env.dict.put((String)var, val);
 			return val; 
 		}
 		if (firstKeyword.equals("set!")) {
 			Object var = first(rest(list));
-			Object expr = rest(rest(list)); 
+			Object expr = first(rest(rest(list))); 
 			Object val = eval(expr,env);
 			Env e = env.find((String)var);
 			e.dict.put((String)var, val);
@@ -61,7 +61,7 @@ public class Lispy {
 		}
 		if (firstKeyword.equals("lambda")) {
 			Object params = first(rest(list));
-			Object body = rest(rest(list)); 
+			Object body = first(rest(rest(list))); 
 
 			return new Procedure((ArrayList<String>)params,body,env); 
 		}
