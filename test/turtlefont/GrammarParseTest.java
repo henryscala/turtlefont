@@ -9,6 +9,8 @@ import org.junit.Test;
 import turtlefont.grammar.GrammarElement;
 import turtlefont.grammar.GrammarParse;
 import turtlefont.grammar.SExpr;
+import turtlefont.lispy.Env;
+import turtlefont.lispy.Lispy;
 public class GrammarParseTest {
 	@Test
 	public void testSExprParse() throws Exception{
@@ -31,5 +33,12 @@ public class GrammarParseTest {
 		GrammarParse parse = new GrammarParse(); 
 		HashMap<String,GrammarElement> map = parse.parse(sexprList);
 		System.out.println(map);
+	}
+	@Test
+	public void testLispy() throws Exception{
+		String program = "(if false (- 2 1) (- 1 2))"; 
+		Object ast = Lispy.parse(program);
+		Object result = Lispy.eval( ast, Env.standardEnv() );
+		System.out.println( Lispy.lispStr( result ));
 	}
 }
