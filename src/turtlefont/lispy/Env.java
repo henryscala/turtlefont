@@ -16,6 +16,10 @@ public class Env {
 			dict.put(parameters.get(i), arguments.get(i));
 		}
 	}
+	@Override
+	public String toString() {
+		return "self-dict{" + dict.toString()+"}" + " outer-dict{" + outer + "}";
+	}
 	//"Find the innermost Env where var appears."
 	public Env find( String var) throws Exception {
         if(dict.containsKey(var)) {
@@ -39,6 +43,8 @@ public class Env {
 		env.dict.put("=", eq);
 		env.dict.put("list?",islist);
 		env.dict.put("list",list);
+		env.dict.put("point",list);   //deliberately repeated 
+		env.dict.put("polyline",list); //deliberately repeated 
 		env.dict.put("append",append);
 		env.dict.put("first",first);
 		env.dict.put("rest",rest);

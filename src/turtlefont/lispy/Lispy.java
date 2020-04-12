@@ -44,7 +44,7 @@ public class Lispy {
 				return eval(alt2,env);
 			}
 		}
-		if (firstKeyword.equals("define")) {
+		if (firstKeyword.equals("define") || firstKeyword.equals("var")) { //deliberately repeated 
 			Object var = first(rest(list));
 			Object expr = first(rest(rest(list))); 
 			Object val = eval(expr,env);

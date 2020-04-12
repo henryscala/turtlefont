@@ -35,7 +35,7 @@ import turtlefont.grammar.GrammarElement;
 import turtlefont.grammar.GrammarParse;
 import turtlefont.grammar.Point;
 import turtlefont.grammar.PolyLine;
-import turtlefont.grammar.SExpr;
+
 
 
 
@@ -150,43 +150,18 @@ public class MainFrame extends JFrame {
 	
 	ActionListener playFileListener = (s)->{
 		
-		ArrayList<SExpr> sexprList;
-		try {
-			sexprList = SExpr.parse(editPanel.textArea.getText());
-		} catch (Exception e) {
-			e.printStackTrace();
-			return; 
-		}
 		GrammarParse parse = new GrammarParse();
-		HashMap<String, GrammarElement> grammarElementMap;
+		GrammarElement grammarElement;
 		
 		try {
-			grammarElementMap = parse.parse(sexprList);
+			grammarElement = parse.parse2(editPanel.textArea.getText());
 		} catch (Exception e) {
 			e.printStackTrace();
 			return; 
 		}
-		GrammarElement maxLenElement = null; 
-		double maxLen = 0; 
-		for(GrammarElement element:grammarElementMap.values()) {
-			if(element.len()>maxLen) {
-				maxLen = element.len();
-				maxLenElement = element; 
-			}
-		}
-//		String charToPlay = JOptionPane.showInputDialog("input the char to play");
-//		if (charToPlay == null || charToPlay.equals("")) {
-//			JOptionPane.showMessageDialog(this, "you haven't specify a char to play");
-//			return;
-//		}
-//		
-//		GrammarElement element = grammarElementMap.get( charToPlay );
-		if(maxLenElement == null) {
-			JOptionPane.showMessageDialog(this, "does not find a char to play?");
-			return; 
-		}
+
 		tabbedPane.setSelectedComponent(paintPanel);
-		paintPanel.addGrammarElement(maxLenElement);
+		paintPanel.addGrammarElement(grammarElement);
 	};
 	ActionListener fileSaveListener = (s)->{
 		//In response to a button click:

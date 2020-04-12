@@ -1,4 +1,6 @@
+(begin
 (var line1 (polyline (point 0 0) (point 0 1) ))
 (var line2 (polyline (point 0 0) (point 1 0) (point 1 1)))
 (var line4 (polyline (point 0 1) (point 1 1) ))
 (var 口 (list line1 line2 line4))
+)

@@ -1,3 +1,5 @@
+(begin 
 (var line1 (polyline (point 0.5 0) (point 0 1) ))
 (var line2 (polyline (point 0.333333 0.333333)  (point 1 1)))
-(var 人 (list line1 line2 ))
+(var picture (list line1 line2 ))
+)
