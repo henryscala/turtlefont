@@ -63,11 +63,15 @@ Swing timer
 
 (done) support blank char 
 
+(done) support rotate 
+
 draw English char 
 
-draw numbers 
+draw numbers, solve bug on number 8 
 
-draw circle/arc 
+(done) draw circle/arc(using polygon to simulate circle/arc) 
+
+draw circle/arc in counter clockwise direction 
 
 # some other configuration file format 
 consider not inventing my own language, but create a DSL, or using an available JVM script language, or open configuration file standard. Candidates may be: 

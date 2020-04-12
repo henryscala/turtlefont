@@ -53,4 +53,24 @@ public class Vector2 {
 	public double determinant(Vector2 other) {
 		return this.getX()*other.getY() - this.getY()*other.getX();
 	}
+	//in degree not radian
+	public Vector2 rotateDegree(double degree) {
+		double radian = Math.toRadians(degree);
+		double cos = Math.cos(radian);
+		double sin = Math.sin(radian);
+		Matrix2 m = new Matrix2();
+		m.vector[0].setX(cos);
+		m.vector[0].setY(sin);
+		m.vector[1].setX(-sin);
+		m.vector[1].setY(cos);
+		return product(m);
+	}
+	//matrix product a vector
+	//matrix contains 2 column vectors
+	public Vector2 product(Matrix2 m) {
+		Vector2 v = new Vector2();
+		v.setX(m.vector[0].getX()*this.getX()+m.vector[1].getX()*this.getY());
+		v.setY(m.vector[0].getY()*this.getX()+m.vector[1].getY()*this.getY());
+		return v; 	
+	}
 }

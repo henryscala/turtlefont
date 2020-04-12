@@ -3,6 +3,8 @@ package turtlefont.lispy;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import turtlefont.geometry.Vector2;
+
 public class Env {
 
 	public HashMap<String,Object> dict = new HashMap<String,Object>();
@@ -45,6 +47,7 @@ public class Env {
 		env.dict.put("list",list);
 		env.dict.put("point",list);   //deliberately repeated 
 		env.dict.put("polyline",list); //deliberately repeated 
+		env.dict.put("polygon",polygon);
 		env.dict.put("append",append);
 		env.dict.put("concat",concat);
 		env.dict.put("first",first);
@@ -261,6 +264,38 @@ public class Env {
 			result = result && (Boolean)o;
 		}
 		return result; 
+	};
+	
+	//given parameters to draw polygon 
+	//output polyline 
+	private static Function polygon = (ArrayList<Object> objects)->{
+		ArrayList<ArrayList<Double>> newList = new ArrayList<ArrayList<Double>>();
+		double centerX = (Double)objects.get(0);
+		double centerY = (Double)objects.get(1);
+		double startX = (Double)objects.get(2);
+		double startY = (Double)objects.get(3);
+		double numSides = (Double)objects.get(4);
+		double numOfSegmentsToKeep  = (Double)objects.get(5);
+		assert numOfSegmentsToKeep <= numSides;
+		Vector2 center = new Vector2(centerX,centerY); 
+		Vector2 vector = new Vector2(startX-centerX,startY-centerY);
+		double degreePerSide = 360.0 / numSides; 
+		
+		ArrayList<Double> point = new ArrayList<Double>();
+		point.add(startX);
+		point.add(startY);
+		newList.add(point);
+		
+		for (int i=0;i<numOfSegmentsToKeep;i++) {
+			vector = vector.rotateDegree(degreePerSide);
+			Vector2 nextPoint = center.add(vector);
+			point = new ArrayList<Double>();
+			point.add(nextPoint.getX());
+			point.add(nextPoint.getY()); 
+			newList.add(point); 
+		}
+		
+		return newList; 
 	};
 
 }

@@ -1,0 +1,8 @@
+(begin
+
+(var line2 (polyline (point 0.1 0.2) (point 1 0) (point 1 1)))
+
+(var seven (list  line2 ))
+(set! seven (position seven 0.15 0.1 0.7 0.8))
+(set! seven (rotate seven 0.5 0.5 10))
+)

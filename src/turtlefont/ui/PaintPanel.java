@@ -34,7 +34,7 @@ public class PaintPanel extends JPanel implements ActionListener{
 	static final int NUM_CHAR_PER_ROW = 12;
 	//static final int NUM_CHAR_PER_COL = 16;
 	static final int CHAR_SIZE = 40;
-	static final int SEPARATOR_SIZE = 10; 
+	static final int SEPARATOR_SIZE = 6; 
 	boolean zoomMode = true; 
 	public HashMap<String, GrammarElement> grammarElementMap = new HashMap<String, GrammarElement>(); 
 	public GrammarElementList grammarElementList = new GrammarElementList();

@@ -1,0 +1,13 @@
+(begin
+
+(var up (polygon 0.5 0.5 0.5 0 20 10))
+(set! up (list up))
+(set! up (position up 0 0 1 0.5))
+
+(var down (polyline (point 0.5 1) (point 1 1) ))
+(set! down (list down))
+(set! down (position up 0 0.5 1 1))
+
+(var three (concat up down))
+(set! three (position three 0.1 0 0.8 1))
+)

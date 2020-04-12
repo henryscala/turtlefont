@@ -1,0 +1,11 @@
+(begin
+
+(var left (polygon 0.5 0.5 0.5 1 30 15))
+(set! left (list left))
+(var zero (polygon 0.5 0.5 0.5 1 30 30))
+(set! zero (list zero))
+(set! zero (position zero 0 0.5 1 0.5))
+(var six (concat zero left))
+(set! six (position six 0.15 0.1 0.7 0.8))
+(var nine (rotate six 0.5 0.5 180))
+)
