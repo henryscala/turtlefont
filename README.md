@@ -53,13 +53,21 @@ Swing timer
 ```
 
 # TODO
-support position while designing font/chart 
+(done) support position while designing font/chart 
 
 (done) before play the font/chart, don't need to input an argument 
 
-play all the fonts in a folder 
+(done) play all the fonts in a folder 
 
-support variable everywhere(variable can stands for a number, an element, or another variable) 
+(done) support variable everywhere(variable can stands for a number, an element, or another variable) 
+
+(done) support blank char 
+
+draw English char 
+
+draw numbers 
+
+draw circle/arc 
 
 # some other configuration file format 
 consider not inventing my own language, but create a DSL, or using an available JVM script language, or open configuration file standard. Candidates may be: 

@@ -33,4 +33,23 @@ public class PolyLine extends GrammarElement {
 		}
 		return d;
 	}
+	@Override
+	public GrammarElement relocate(double x, double y, double width, double height) {
+		PolyLine pl =  (PolyLine)this.copy(); 
+				
+		for (int i=0;i<pl.pointList.size();i++) {
+			Point pointNext = pl.pointList.get(i);
+			pointNext=(Point)pointNext.relocate(x, y, width, height);			
+			pl.pointList.set(i, pointNext);
+		}
+		return pl;
+	}
+	@Override
+	public GrammarElement copy() {
+		PolyLine pl = new PolyLine();
+		for (Point p:this.pointList) {
+			pl.pointList.add((Point)p.copy());
+		}
+		return pl;
+	}
 }

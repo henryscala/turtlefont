@@ -31,8 +31,21 @@ public class Point extends GrammarElement{
 
 	@Override
 	public double len() {
-		// TODO Auto-generated method stub
 		return 0;
+	}
+	@Override
+	public GrammarElement relocate(double x, double y, double width, double height) {
+		Point point = (Point)this.copy(); 
+		double x1 = (point.x*width)+x;
+		double y1 = (point.y*height)+y;
+		point.x = x1; 
+		point.y = y1; 
+		return point; 
+	}
+	@Override
+	public GrammarElement copy() {
+		Point p = new Point(this.x,this.y); 
+		return p;
 	}
 
 }

@@ -28,4 +28,25 @@ public class GrammarElementList extends GrammarElement {
 	public double len() {
 		return elementList.stream().mapToDouble(e->e.len()).sum();
 	}
+
+	@Override
+	public GrammarElement relocate(double x, double y, double width, double height) {
+		GrammarElementList list = (GrammarElementList)this.copy();
+		for(int i=0;i<list.elementList.size();i++) {
+			GrammarElement child = list.elementList.get(i);
+			child=child.relocate(x, y, width, height);		
+			list.elementList.set(i, child);
+		}
+		return list; 
+	}
+
+	@Override
+	public GrammarElement copy() {
+		GrammarElementList list = new GrammarElementList(); 
+		for (GrammarElement e:elementList) {
+			list.elementList.add(e.copy());
+		}
+		
+		return list; 
+	}
 }

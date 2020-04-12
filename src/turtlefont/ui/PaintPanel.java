@@ -12,6 +12,7 @@ import java.util.HashMap;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import turtlefont.grammar.Blank;
 import turtlefont.grammar.GrammarElement;
 import turtlefont.grammar.GrammarElementList;
 import turtlefont.grammar.Point;
@@ -30,10 +31,10 @@ public class PaintPanel extends JPanel implements ActionListener{
 	static final int LINE_WIDTH = 3; 
 	static final int LEFT_MARGIN = 40;
 	static final int TOP_MARGIN = 40; 
-	static final int NUM_CHAR_PER_ROW = 40;
-	static final int NUM_CHAR_PER_COL = 16;
+	static final int NUM_CHAR_PER_ROW = 12;
+	//static final int NUM_CHAR_PER_COL = 16;
 	static final int CHAR_SIZE = 40;
-	static final int SEPARATOR_SIZE = 4; 
+	static final int SEPARATOR_SIZE = 10; 
 	boolean zoomMode = true; 
 	public HashMap<String, GrammarElement> grammarElementMap = new HashMap<String, GrammarElement>(); 
 	public GrammarElementList grammarElementList = new GrammarElementList();
@@ -65,7 +66,8 @@ public class PaintPanel extends JPanel implements ActionListener{
 			GrammarElement element = grammarElementList.elementList.get(i);
 			double x = LEFT_MARGIN + col * CHAR_SIZE + SEPARATOR_SIZE*col;
 			double y = TOP_MARGIN + row * CHAR_SIZE + SEPARATOR_SIZE*row;
-			GrammarElement.relocate(element, x, y, CHAR_SIZE, CHAR_SIZE); 
+			element = element.relocate(x, y, CHAR_SIZE, CHAR_SIZE);
+			grammarElementList.elementList.set(i, element); 
 			col++;
 			if (col >= NUM_CHAR_PER_ROW) {
 				col = 0;
@@ -119,6 +121,9 @@ public class PaintPanel extends JPanel implements ActionListener{
 	}
 	private void drawGrammarElement(Graphics2D g,GrammarElement element, int x, int y, int width, int height, double distance) {
 		double currDistance = 0; 
+		if (element instanceof Blank) {
+			return; 
+		}
 		if (element instanceof Point) {
 			Point p = (Point)element;
 			g.drawArc((int)(p.x*width)+x, (int)(p.y*height)+y, LINE_WIDTH*2, LINE_WIDTH*2, 0, 360);

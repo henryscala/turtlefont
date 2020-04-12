@@ -31,6 +31,7 @@ import turtlefont.Utils;
 import turtlefont.geometry.LineCrossPointSolver;
 import turtlefont.geometry.LineParametricEquation;
 import turtlefont.geometry.Vector2;
+import turtlefont.grammar.Blank;
 import turtlefont.grammar.GrammarElement;
 import turtlefont.grammar.GrammarParse;
 import turtlefont.grammar.Point;
@@ -163,11 +164,12 @@ public class MainFrame extends JFrame {
 			i+=chr.codePointCount(0, chr.length());
 			GrammarElement element = paintPanel.grammarElementMap.get(chr);
 			if (element == null) {
-				JOptionPane.showMessageDialog(this, "not found " + chr);
-				break; 
+				element = new Blank();
+				System.out.println("not found char " + chr+",use blank char");
+				
 			}
 			System.out.println(chr);
-			paintPanel.grammarElementList.elementList.add(element); 
+			paintPanel.grammarElementList.elementList.add(element.copy()); 
 		}
 		
 		
@@ -188,7 +190,7 @@ public class MainFrame extends JFrame {
 			e.printStackTrace();
 			return; 
 		}
-
+		paintPanel.grammarElementList.elementList.clear();
 		tabbedPane.setSelectedComponent(paintPanel);
 		paintPanel.addGrammarElement(grammarElement);
 	};
