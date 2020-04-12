@@ -46,6 +46,7 @@ public class Env {
 		env.dict.put("point",list);   //deliberately repeated 
 		env.dict.put("polyline",list); //deliberately repeated 
 		env.dict.put("append",append);
+		env.dict.put("concat",concat);
 		env.dict.put("first",first);
 		env.dict.put("rest",rest);
 		env.dict.put("cons",cons);
@@ -94,6 +95,16 @@ public class Env {
 			list.add(objects.get(i));
 		}
 		return list; 
+	};
+	@SuppressWarnings("unchecked")
+	private static Function concat = (ArrayList<Object> objects)->{
+		
+		ArrayList<Object> list = (ArrayList<Object>)objects.get(0);
+		ArrayList<Object> list2 = (ArrayList<Object>)objects.get(1);
+		ArrayList<Object> merge = new ArrayList<Object>();
+		merge.addAll(list);
+		merge.addAll(list2); 
+		return merge; 
 	};
 	private static Function cons = (ArrayList<Object> objects)->{
 		@SuppressWarnings("unchecked")
@@ -254,21 +265,5 @@ public class Env {
 
 }
 
-interface Function{
-	public Object call(ArrayList<Object> list) ;
-}
 
-class Procedure{
-    public ArrayList<String> params ;
-    public Object body ; 
-    public Env env;
-    public Procedure(ArrayList<String> params, Object body, Env env){
-        this.env = env; 
-        this.params = params;
-        this.body = body; 
-    }
-    public Object call( ArrayList<Object> args) throws Exception {
-        return Lispy.eval(body, new Env(params, args, env)); 
-    }
-}
    
