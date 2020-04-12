@@ -9,7 +9,7 @@ import turtlefont.lispy.Lispy;
 
 
 public class GrammarParse {
-	// position(picture,x,y,width,height)
+	
 	@SuppressWarnings("unchecked")
 	private Function position = (ArrayList<Object> objects)->{
 		ArrayList<ArrayList<ArrayList<Double>>> newPolyLineList = new ArrayList<ArrayList<ArrayList<Double>>>();

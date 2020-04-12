@@ -148,6 +148,35 @@ public class MainFrame extends JFrame {
 		paintPanel.grammarElementList.elementList.clear();
 	};
 	
+	ActionListener playSentenceListener = (s)->{
+		String line = JOptionPane.showInputDialog("input sentence");
+		if (line == null || line.equals("")) {
+			JOptionPane.showMessageDialog(this, "you haven't specify a sentence");
+			return;
+		}
+		
+		paintPanel.grammarElementList.elementList.clear(); 
+		for (int i=0;i<line.length();) {
+			System.out.println(i);
+			int codePoint = line.codePointAt(i);
+			String chr = new String(new int [] {codePoint}, 0, 1);
+			i+=chr.codePointCount(0, chr.length());
+			GrammarElement element = paintPanel.grammarElementMap.get(chr);
+			if (element == null) {
+				JOptionPane.showMessageDialog(this, "not found " + chr);
+				break; 
+			}
+			System.out.println(chr);
+			paintPanel.grammarElementList.elementList.add(element); 
+		}
+		
+		
+		paintPanel.arrangeEachChar();
+		paintPanel.resetDistance();
+		tabbedPane.setSelectedComponent(paintPanel);
+		
+	};
+	
 	ActionListener playFileListener = (s)->{
 		
 		GrammarParse parse = new GrammarParse();
@@ -180,16 +209,26 @@ public class MainFrame extends JFrame {
 	};
 	ActionListener fileOpenListener = (s)->{
 		//In response to a button click:
+		fileChooser.setMultiSelectionEnabled(true);
 		int returnVal = fileChooser.showOpenDialog(this);
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
-			File file = fileChooser.getSelectedFile();
-			try {
-				String grammar = Utils.readFileContent(file);
-				editPanel.textArea.setText(grammar);
-				tabbedPane.setSelectedComponent(editPanel);
+			for (File file :fileChooser.getSelectedFiles()) {
+				GrammarParse parse = new GrammarParse();
 				
-			} catch (Exception e) {
-				e.printStackTrace();
+				
+				try {
+					String grammar = Utils.readFileContent(file);
+					String chr = file.getName().split("\\.")[0];
+					
+					GrammarElement grammarElement = parse.parse2(grammar);
+					paintPanel.grammarElementMap.put(chr, grammarElement);
+					
+					editPanel.textArea.setText(grammar);//the content of the last selected file 
+					tabbedPane.setSelectedComponent(editPanel);
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		} 
 	};
@@ -205,6 +244,7 @@ public class MainFrame extends JFrame {
 		
 		JMenu drawMenu = new JMenu("Draw");
 		JMenuItem playFontFile = new JMenuItem("Play"); 
+		JMenuItem playSentence = new JMenuItem("PlaySentece");
 		JMenuItem clearCanvas = new JMenuItem("ClearCanvas"); 
 		
 		JMenuItem drawPoint = new JMenuItem("DrawPoint");
@@ -212,6 +252,7 @@ public class MainFrame extends JFrame {
 		JMenuItem drawCrossPointOfTwoLines = new JMenuItem("DrawCrossPointOfTwoLines");
 		JCheckBoxMenuItem zoomMode = new JCheckBoxMenuItem("zoomMode",true);
 		drawMenu.add(playFontFile);
+		drawMenu.add(playSentence);
 		drawMenu.add(clearCanvas);
 		drawMenu.add(zoomMode);
 		drawMenu.add(drawPoint);
@@ -221,6 +262,7 @@ public class MainFrame extends JFrame {
 		menuBar.add(fileMenu); 
 		menuBar.add(drawMenu);
 		
+		playSentence.addActionListener(playSentenceListener);
 		openFontFile.addActionListener(fileOpenListener);
 		saveFontFile.addActionListener(fileSaveListener);
 		playFontFile.addActionListener(playFileListener);

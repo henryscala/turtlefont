@@ -7,6 +7,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -29,9 +30,12 @@ public class PaintPanel extends JPanel implements ActionListener{
 	static final int LINE_WIDTH = 3; 
 	static final int LEFT_MARGIN = 40;
 	static final int TOP_MARGIN = 40; 
-	
+	static final int NUM_CHAR_PER_ROW = 40;
+	static final int NUM_CHAR_PER_COL = 16;
+	static final int CHAR_SIZE = 40;
+	static final int SEPARATOR_SIZE = 4; 
 	boolean zoomMode = true; 
-	
+	public HashMap<String, GrammarElement> grammarElementMap = new HashMap<String, GrammarElement>(); 
 	public GrammarElementList grammarElementList = new GrammarElementList();
 	Timer timer = new Timer(TIMER_PERIOD,this);//100 milli seconds 
 	double totalDistance; 
@@ -49,17 +53,36 @@ public class PaintPanel extends JPanel implements ActionListener{
 	}
 	public void addGrammarElement(GrammarElement element) {
 		grammarElementList.elementList.add(element);
+		
+		arrangeEachChar();
 		resetDistance();
 	}
+
+	public void arrangeEachChar() {
+		int row = 0; 
+		int col = 0; 
+		for (int i=0;i<grammarElementList.elementList.size();i++) {
+			GrammarElement element = grammarElementList.elementList.get(i);
+			double x = LEFT_MARGIN + col * CHAR_SIZE + SEPARATOR_SIZE*col;
+			double y = TOP_MARGIN + row * CHAR_SIZE + SEPARATOR_SIZE*row;
+			GrammarElement.relocate(element, x, y, CHAR_SIZE, CHAR_SIZE); 
+			col++;
+			if (col >= NUM_CHAR_PER_ROW) {
+				col = 0;
+				row++;
+			}
+		}
+	}
 	
+
 	//timer fires
 	@Override
 	public void actionPerformed(ActionEvent e){
-		if (zoomMode) {
-			currDistance += ZOOM_MODE_STEP_LEN; 
-		} else {
+		//if (zoomMode) {
+		//	currDistance += ZOOM_MODE_STEP_LEN; 
+		//} else {
 			currDistance += NORMAL_MODE_STEP_LEN;
-		}
+		//}
 		validate();
 		repaint();
 	}
@@ -70,12 +93,12 @@ public class PaintPanel extends JPanel implements ActionListener{
 		g2.setStroke(new BasicStroke(LINE_WIDTH));
 		drawCoordinate(g2); 
 		if(grammarElementList.elementList.size() > 0) {
-			if (zoomMode) {
-				drawGrammarElement(g2,grammarElementList,LEFT_MARGIN,TOP_MARGIN,WIDTH-2*LEFT_MARGIN,HEIGHT-2*TOP_MARGIN,currDistance);
+			//if (zoomMode) {
+			//	drawGrammarElement(g2,grammarElementList,LEFT_MARGIN,TOP_MARGIN,WIDTH-2*LEFT_MARGIN,HEIGHT-2*TOP_MARGIN,currDistance);
 		
-			} else {
+			//} else {
 				drawGrammarElement(g2,grammarElementList,0,0,1,1,currDistance);
-			}
+			//}
 		}
 	}
 	private void drawCoordinate(Graphics2D g) {
