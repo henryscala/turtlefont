@@ -1,0 +1,7 @@
+(begin 
+(var line0 (polyline (point 0.5 0) (point 0.5 1 )))
+(var line1 (polygon 0.5 0.5 0.5 0 20 10))
+
+(var D (list line0 line1  ))
+(set! D (position D -0.5 0 1.5 1))
+)

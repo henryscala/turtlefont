@@ -1,10 +1,12 @@
 (begin
 
 (var left (polygon 0.5 0.5 0.5 1 30 15))
+(set! left (reverse left))
 (set! left (list left))
 (var zero (polygon 0.5 0.5 0.5 1 30 30))
+(set! zero (reverse zero))
 (set! zero (list zero))
 (set! zero (position zero 0 0.5 1 0.5))
-(var six (concat zero left))
+(var six (concat left zero ))
 (set! six (position six 0.15 0.1 0.7 0.8))
 )

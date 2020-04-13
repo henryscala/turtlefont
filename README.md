@@ -67,11 +67,13 @@ Swing timer
 
 draw English char 
 
-draw numbers, solve bug on number 8 
+(done) draw numbers, solve bug on number 8 
 
 (done) draw circle/arc(using polygon to simulate circle/arc) 
 
-draw circle/arc in counter clockwise direction 
+(done) draw circle/arc in counter clockwise direction(using polygon and the reverse function to achieve this target).
+
+support comment in lispy 
 
 # some other configuration file format 
 consider not inventing my own language, but create a DSL, or using an available JVM script language, or open configuration file standard. Candidates may be: 

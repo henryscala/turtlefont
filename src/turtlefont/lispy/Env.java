@@ -53,6 +53,7 @@ public class Env {
 		env.dict.put("first",first);
 		env.dict.put("rest",rest);
 		env.dict.put("cons",cons);
+		env.dict.put("reverse",reverse); //reverse the elements in a list. Use it together with polygon, it is able to achieve the counter clockwise function
 		env.dict.put("map",map);
 		env.dict.put("length",length);
 		env.dict.put("begin", begin);
@@ -160,6 +161,15 @@ public class Env {
 		@SuppressWarnings("unchecked")
 		ArrayList<Object> list = (ArrayList<Object>)objects.get(0);
 		return list.get(0);
+	};
+	private static Function reverse = (ArrayList<Object> objects)->{
+		@SuppressWarnings("unchecked")
+		ArrayList<Object> list = (ArrayList<Object>)objects.get(0);
+		ArrayList<Object> newList = new ArrayList<Object>();
+		for (int i=list.size()-1;i>=0;i--) {
+			newList.add(list.get(i));
+		}
+		return newList;
 	};
 	private static Function eq = (ArrayList<Object> objects)->{
 		Double d0 = (Double)objects.get(0);
