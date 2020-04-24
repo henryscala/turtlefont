@@ -1,6 +1,7 @@
 package turtlefont.grammar;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import turtlefont.geometry.Vector2;
 import turtlefont.lispy.Env;
@@ -9,6 +10,11 @@ import turtlefont.lispy.Lispy;
 
 
 public class GrammarParse {
+	//store all chars 
+	private HashMap<String, GrammarElementList> charMap = new HashMap<>();
+	public HashMap<String, GrammarElementList> getCharMap(){
+		return charMap; 
+	}
 	@SuppressWarnings("unchecked")
 	private Function rotate = (ArrayList<Object> objects)->{
 		ArrayList<ArrayList<ArrayList<Double>>> newPolyLineList = new ArrayList<ArrayList<ArrayList<Double>>>();
@@ -72,28 +78,58 @@ public class GrammarParse {
 		}
 		return newPolyLineList;
 	};
+	//register a char to the system dictionary 
 	@SuppressWarnings("unchecked")
-	public GrammarElementList parse2(String program) throws Exception {
+	private Function register = (ArrayList<Object> objects)->{
+
+		//workaround, the first element might be double number. Need to convert the double to int
+		Object o = objects.get(0);
+		String charName; 
+		if (o instanceof Double) {
+			Double d = (Double)o;
+			int i = (int)d.doubleValue();
+			charName = String.valueOf(i);
+		} else {
+			charName = (String)objects.get(0);
+		}
+		
+		//list of list of list 
+		ArrayList<ArrayList<ArrayList<Double>>> polyLineList = (ArrayList<ArrayList<ArrayList<Double>>>)objects.get(1);
+		GrammarElementList list = toGrammarElementList(polyLineList);
+		charMap.put(charName, list);
+		return polyLineList;
+	};
+	private GrammarElementList toGrammarElementList(ArrayList<ArrayList<ArrayList<Double>>> polyLineList) {
 		GrammarElementList elementList = new GrammarElementList(); 
 		
-		Object ast = Lispy.parse(program);
-		Env globalEnv = Env.standardEnv();
-		globalEnv.dict.put("position", position);//extends it to support position function
-		globalEnv.dict.put("rotate", rotate);//extends it to support rotate function
-		//list of list of list 
-		ArrayList<Object> polyLineList = (ArrayList<Object>)Lispy.eval(ast, globalEnv);
-		for (Object o:polyLineList) {
-			ArrayList<Object> pointList = (ArrayList<Object>)o;
+		for (ArrayList<ArrayList<Double>> o:polyLineList) {
+			
 			PolyLine pl = new PolyLine();
-			for (Object p:pointList) {
-				ArrayList<Object> coordinateList = (ArrayList<Object>) p;
-				double x = (double)coordinateList.get(0);
-				double y = (double)coordinateList.get(1);
+			for (ArrayList<Double> p:o) {
+				
+				double x = (double)p.get(0);
+				double y = (double)p.get(1);
 				Point a= new Point(x,y);
 				pl.pointList.add(a); 
 			}
 			elementList.elementList.add(pl);
 		}
+		return elementList; 
+	}
+	@SuppressWarnings("unchecked")
+	public GrammarElementList parse2(String program) throws Exception {
+		
+		
+		Object ast = Lispy.parse(program);
+		Env globalEnv = Env.standardEnv();
+		globalEnv.dict.put("position", position);//extends it to support position function
+		globalEnv.dict.put("rotate", rotate);//extends it to support rotate function
+		globalEnv.dict.put("register", register);//extends it to support rotate function
+		
+		//list of list of list 
+		ArrayList<ArrayList<ArrayList<Double>>> polyLineList = (ArrayList<ArrayList<ArrayList<Double>>>)Lispy.eval(ast, globalEnv);
+		GrammarElementList elementList =  toGrammarElementList(polyLineList);
+		
 		return elementList;
 	}
 

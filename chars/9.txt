@@ -8,4 +8,5 @@
 (var six (concat zero left))
 (set! six (position six 0.15 0.1 0.7 0.8))
 (var nine (rotate six 0.5 0.5 180))
+(register 9 nine)
 )

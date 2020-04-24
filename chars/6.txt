@@ -9,4 +9,5 @@
 (set! zero (position zero 0 0.5 1 0.5))
 (var six (concat left zero ))
 (set! six (position six 0.15 0.1 0.7 0.8))
+(register 6 six)
 )

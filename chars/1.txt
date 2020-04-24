@@ -3,4 +3,5 @@
 (var one (polyline (point 0.6 0) (point 0.4 1) ))
 (set! one (list one))
 (set! one (position one 0.2 0.1 0.6 0.8))
+(register 1 one)
 )

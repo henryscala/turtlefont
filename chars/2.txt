@@ -8,4 +8,5 @@
 
 (var two (concat up down))
 (set! two (position two 0.1 0 0.8 1))
+(register 2 two)
 )

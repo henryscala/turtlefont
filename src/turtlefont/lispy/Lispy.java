@@ -19,8 +19,13 @@ public class Lispy {
 	public static Object eval(Object x, Env env) throws Exception {
 		if (x instanceof String) {
 			String symbol = (String)x; 
-			Env e = env.find(symbol);
-			return e.dict.get(x); 
+			//workaround: if cannot find the symbol, then return the symbol itself
+			try {
+				Env environment = env.find(symbol);
+				return environment.dict.get(x);
+			} catch (Exception e) {
+				return symbol; 
+			}
 		}
 		
 		if (!(x instanceof ArrayList<?>)) {

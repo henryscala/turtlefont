@@ -10,4 +10,5 @@
 
 (var five (concat up down))
 (set! five (position five 0.1 0 0.8 1))
+(register 5 five)
 )

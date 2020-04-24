@@ -8,5 +8,7 @@
 (var line5 (polyline (point 0 1) (point 1 1) ))
 (var 口 (list line3 line4 line5))
 
-(var 囚 (concat 口 人 ) )
+(var prisoner (concat 口 人 ) )
+
+(register 囚 prisoner)
 )

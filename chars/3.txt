@@ -10,4 +10,5 @@
 
 (var three (concat up down))
 (set! three (position three 0.1 0 0.8 1))
+(register 3 three)
 )

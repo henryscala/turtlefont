@@ -2,6 +2,7 @@
 
 (var line1 (polygon 0.5 0.5 0.5 1 20 10))
 (set! line1 (reverse line1))
-(var C (list  line1  ))
-(set! C (position C 0.2 0 1.5 1))
+(var charC (list  line1  ))
+(set! charC (position charC 0.2 0 1.5 1))
+(register C charC)
 )

@@ -5,5 +5,6 @@
 (var 口 (list line1 line2 line4))
 (var upper (position 口 0.2 0.1 0.6 0.35))
 (var lower (position 口 0.1 0.55 0.8 0.4))
-(var 吕 (concat upper lower))
+(var pic (concat upper lower))
+(register 吕 pic)
 )

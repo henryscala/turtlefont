@@ -7,4 +7,5 @@
 (var zero2 (position zero 0 0.5 1 0.5))
 (var eight (concat zero1 zero2 ))
 (set! eight (position eight 0.2 0.1 0.6 0.8))
+(register 8 eight)
 )

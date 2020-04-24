@@ -150,19 +150,18 @@ public class MainFrame extends JFrame {
 	};
 	
 	ActionListener playSentenceListener = (s)->{
-		String line = JOptionPane.showInputDialog("input sentence");
+		String line = editPanel.textArea.getText();
 		if (line == null || line.equals("")) {
-			JOptionPane.showMessageDialog(this, "you haven't specify a sentence");
+			JOptionPane.showMessageDialog(this, "you haven't specify a sentence in the text box");
 			return;
 		}
-		
 		paintPanel.grammarElementList.elementList.clear(); 
 		for (int i=0;i<line.length();) {
 			System.out.println(i);
 			int codePoint = line.codePointAt(i);
 			String chr = new String(new int [] {codePoint}, 0, 1);
 			i+=chr.codePointCount(0, chr.length());
-			GrammarElement element = paintPanel.grammarElementMap.get(chr);
+			GrammarElement element = paintPanel.parser.getCharMap().get(chr);
 			if (element == null) {
 				element = new Blank();
 				System.out.println("not found char " + chr+",use blank char");
@@ -215,15 +214,13 @@ public class MainFrame extends JFrame {
 		int returnVal = fileChooser.showOpenDialog(this);
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			for (File file :fileChooser.getSelectedFiles()) {
-				GrammarParse parse = new GrammarParse();
+				
 				
 				
 				try {
 					String grammar = Utils.readFileContent(file);
-					String chr = file.getName().split("\\.")[0];
 					
-					GrammarElement grammarElement = parse.parse2(grammar);
-					paintPanel.grammarElementMap.put(chr, grammarElement);
+					paintPanel.parser.parse2(grammar);		
 					
 					editPanel.textArea.setText(grammar);//the content of the last selected file 
 					tabbedPane.setSelectedComponent(editPanel);

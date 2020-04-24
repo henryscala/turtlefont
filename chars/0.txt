@@ -3,4 +3,5 @@
 (var zero (polygon 0.5 0.5 0.5 0 20 20))
 (set! zero (list zero))
 (set! zero (position zero 0.2 0.1 0.6 0.8))
+(register 0 zero)
 )

@@ -7,7 +7,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.HashMap;
+
 
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -15,6 +15,7 @@ import javax.swing.Timer;
 import turtlefont.grammar.Blank;
 import turtlefont.grammar.GrammarElement;
 import turtlefont.grammar.GrammarElementList;
+import turtlefont.grammar.GrammarParse;
 import turtlefont.grammar.Point;
 import turtlefont.grammar.PolyLine;
 
@@ -36,7 +37,7 @@ public class PaintPanel extends JPanel implements ActionListener{
 	static final int CHAR_SIZE = 40;
 	static final int SEPARATOR_SIZE = 6; 
 	boolean zoomMode = true; 
-	public HashMap<String, GrammarElement> grammarElementMap = new HashMap<String, GrammarElement>(); 
+	public GrammarParse parser = new GrammarParse();
 	public GrammarElementList grammarElementList = new GrammarElementList();
 	Timer timer = new Timer(TIMER_PERIOD,this);//100 milli seconds 
 	double totalDistance; 

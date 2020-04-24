@@ -8,4 +8,5 @@
 (var one (polyline (point 0.6 0) (point 0.4 1) ))
 (set! one (list one))
 (var four (concat up one ))
+(register 4 four)
 )
