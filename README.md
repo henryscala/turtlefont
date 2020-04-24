@@ -73,8 +73,11 @@ draw English char
 
 (done) draw circle/arc in counter clockwise direction(using polygon and the reverse function to achieve this target).
 
-support register char to the system 
+(done) support register char to the system 
+
 support comment in lispy 
+
+永 char
 
 # some other configuration file format 
 consider not inventing my own language, but create a DSL, or using an available JVM script language, or open configuration file standard. Candidates may be: 
