@@ -77,7 +77,9 @@ draw English char
 
 support comment in lispy 
 
-永 char
+(done) 永 鸟 马
+
+各 骆
 
 # some other configuration file format 
 consider not inventing my own language, but create a DSL, or using an available JVM script language, or open configuration file standard. Candidates may be: 

@@ -1,0 +1,9 @@
+(begin
+
+(var line2 (polyline (point 0.2 0.475) (point 0.8 0.525)))
+(var line3 (polyline (point 0.5 0.2) (point 0.5 0.8) (point 0.7 0.8)))
+
+(var char-t (list  line2 line3 ))
+(set! char-t (position char-t 0.15 0.15 0.7 0.7))
+(register t char-t)
+)

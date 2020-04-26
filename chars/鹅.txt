@@ -1,0 +1,24 @@
+(begin
+
+
+(var line1 (polyline (point 0.4 0.1) (point 0.3 0.25) ))
+(var line2 (polyline (point 0.15 0.25) (point 0.65 0.25) (point 0.55 0.45) ))
+(var line3 (polyline (point 0.15 0.25) (point 0.15 0.5) (point 0.8 0.5) (point 0.7 0.95) (point 0.6 0.8)))
+(var line4 (polyline (point 0.05 0.7) (point 0.75 0.7) ))
+(var line5 (polyline (point 0.3 0.34) (point 0.4 0.4) ))
+(var 鸟 (list line1 line2 line3 line4 line5))
+(set! 鸟 (position 鸟 0.47 0.05 0.53 0.95))
+
+(var line11 (polyline (point 0.4 0.1) (point 0.1 0.3) ))
+(var line12 (polyline (point 0.1 0.35)  (point 0.9 0.35)))
+(var line13 (polyline (point 0.35 0.2)  (point 0.35 0.9) (point 0.1 0.8)))
+(var line14 (polyline (point 0.1 0.7)  (point 0.4 0.55) ))
+(var line15 (polyline (point 0.6 0.1)  (point 0.8 0.9) (point 0.88 0.65)))
+(var line16 (polyline (point 0.9 0.55)  (point 0.6 0.68) ))
+(var line17 (polyline (point 0.7 0.1)  (point 0.8 0.25) ))
+(var 我 (list line11 line12 line13 line14 line15 line16 line17))
+(set! 我 (position 我 0 0.12 0.45 0.85))
+
+(var pic (concat 我 鸟))
+(register 鹅 pic)
+)
