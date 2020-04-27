@@ -1,0 +1,17 @@
+(begin
+
+
+(var line1 (polyline (point 0.5 0) (point 0.6 0.2) ))
+(var line2 (polyline (point 0.1 0.2) (point 0.1 0.35) ))
+(var line3 (polyline (point 0.1 0.2) (point 0.9 0.2) (point 0.9 0.35) ))
+(var up (list line1 line2 line3 ))
+
+(var line11 (polyline (point 0.4 0) (point 0 1) ))
+(var line12 (polyline (point 0.6 0)  (point 1 1)))
+(var 八 (list line11 line12 ))
+(set! 八 (position 八 0.15 0.3 0.7 0.5))
+
+(var pic (concat up 八))
+
+(register 穴 pic)
+)

@@ -1,0 +1,27 @@
+(begin
+
+
+
+(var line21 (polyline (point 0.15 0.25) (point 0.65 0.25) (point 0.55 0.45) ))
+(var line22 (polyline (point 0.13 0.35) (point 0.13 0.55) (point 0.8 0.55) (point 0.7 0.95) (point 0.6 0.8)))
+(var line23 (polyline (point 0.05 0.7) (point 0.75 0.7) ))
+(var 马 (list  line21 line22 line23 ))
+(set! 马 (position 马 0.1 -0.1 0.45 1))
+
+(var line1 (polyline (point 0 0) (point 0 1) ))
+(var line2 (polyline (point 0 0) (point 1 0) (point 1 1)))
+(var line3 (polyline (point 0 1) (point 1 1) ))
+(var 口 (list line1 line2 line3))
+(set! 口 (position 口 0.3 0.6 0.4 0.3))
+
+(var line11 (polyline (point 0.5 0) (point 0.25 0.25) ))
+(var line12 (polyline (point 0.38 0.15) (point 0.62 0.15) (point 0.23 0.5) ))
+(var line13 (polyline (point 0.35 0.18) (point 0.77 0.5) ))
+(var up (list line11 line12 line13))
+(var 各 (concat up 口))
+(set! 各 (position 各 0.45 0 0.58 1))
+(var pic (concat 马 各))
+(register 骆 pic)
+
+
+)

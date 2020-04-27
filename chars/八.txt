@@ -1,0 +1,6 @@
+(begin 
+(var line1 (polyline (point 0.4 0) (point 0 1) ))
+(var line2 (polyline (point 0.6 0)  (point 1 1)))
+(var picture (list line1 line2 ))
+(register 八 picture)
+)

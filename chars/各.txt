@@ -1,0 +1,17 @@
+(begin
+(var line1 (polyline (point 0 0) (point 0 1) ))
+(var line2 (polyline (point 0 0) (point 1 0) (point 1 1)))
+(var line3 (polyline (point 0 1) (point 1 1) ))
+(var 口 (list line1 line2 line3))
+(set! 口 (position 口 0.3 0.6 0.4 0.3))
+
+(var line11 (polyline (point 0.5 0) (point 0.25 0.25) ))
+(var line12 (polyline (point 0.38 0.15) (point 0.62 0.15) (point 0.23 0.5) ))
+(var line13 (polyline (point 0.35 0.18) (point 0.77 0.5) ))
+(var up (list line11 line12 line13))
+
+(var pic (concat up 口))
+(register 各 pic)
+
+
+)

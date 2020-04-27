@@ -1,0 +1,24 @@
+(begin
+
+
+(var line1 (polyline (point 0.5 0) (point 0.6 0.2) ))
+(var line2 (polyline (point 0.1 0.2) (point 0.1 0.35) ))
+(var line3 (polyline (point 0.1 0.2) (point 0.9 0.2) (point 0.9 0.35) ))
+(var up (list line1 line2 line3 ))
+
+(var line1 (polyline (point 0.8 0) (point 0.2 0.2) (point 0.2 0.9)))
+(var line2 (polyline (point 0.2 0.35)  (point 0.9 0.35)))
+(var line3 (polyline (point 0.75 0.35)  (point 0.75 0.9)))
+(var line4 (polyline (point 0.1 0.9)  (point 0.9 0.9) ))
+(var 丘 (list line1 line2 line3 line4))
+(set! 丘 (position 丘 0 0 1 0.65))
+
+(var line11 (polyline (point 0.4 0) (point 0 1) ))
+(var line12 (polyline (point 0.6 0)  (point 1 1)))
+(var 八 (list line11 line12 ))
+(set! 八 (position 八 0.15 0.65 0.7 0.3))
+(var 兵 (concat 丘 八))
+(set! 兵 (position 兵  0.15 0.3 0.7 0.6))
+
+(register 宾 (concat up 兵))
+)
