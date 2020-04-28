@@ -81,7 +81,9 @@ support comment in lispy
 
 (done) 各 骆 宾 王
 
-曲
+(done) 曲 项
+
+工 向
 
 # some other configuration file format 
 consider not inventing my own language, but create a DSL, or using an available JVM script language, or open configuration file standard. Candidates may be: 

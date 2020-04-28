@@ -1,0 +1,26 @@
+(begin
+
+(var line2 (polyline (point 0 0) (point 1 0) ))
+(var line4 (polyline (point 0.5 0) (point 0.5 1) ))
+(var line5 (polyline (point 0 1) (point 1 1) ))
+(var field (list line2 line4 line5))
+(set! field (position field 0.1 0.25 0.35 0.45))
+(var 工 field)
+
+(var line11 (polyline (point 0 0) (point 1 0) ))
+(var line12 (polyline (point 0.5 0) (point 0.5 0.3)))
+(var line13 (polyline (point 0.2 0.3) (point 0.2 0.7) ))
+(var line14 (polyline (point 0.2 0.3) (point 0.8 0.3) (point 0.8 0.7)))
+(var up (list line11 line12 line13 line14))
+(set! up (position up 0.1 0.1 0.8 0.8))
+
+(var line111 (polyline (point 0.5 0) (point 0 1) ))
+(var line112 (polyline (point 0.333333 0.333333)  (point 1 1)))
+(var 人 (list line111 line112 ))
+(set! 人 (position 人 0.2 0.4 0.6 0.5))
+
+(var 页 (concat up 人))
+(set! 页 (position 页 0.5 0.1 0.5 0.8))
+
+(register 项 (concat 工 页))
+)
